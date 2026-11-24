@@ -22,6 +22,10 @@ def main():
     assert ENTRY.strip() == ENTRY and ENTRY.strip(), "entry must not be blank"
     with open(path, "wb") as f:
         f.write(data)
+    # The grader reads /output as a different user afterwards, so the file
+    # must be world-readable. Never chmod /output itself (uid 65534 cannot
+    # chmod a directory it does not own).
+    os.chmod(path, 0o644)
 
 
 if __name__ == "__main__":
